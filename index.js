@@ -28,10 +28,10 @@ app.get("/todos", async (req, res) => {
     const { search } = req.query;
 
     if (search) {
-      query += ` WHERE description ILIKE $1`,[search]; // Using ILIKE for case-insensitive search
+      query += " WHERE description ILIKE $1"; 
     }
 
-    const result = await pool.query(query, [search ? `%${search}%` : []]);
+    const result = await pool.query(query, search ? [`%${search}%`] : []);
 
     res.json(result.rows);
   } catch (error) {
